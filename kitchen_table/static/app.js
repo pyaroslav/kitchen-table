@@ -130,6 +130,7 @@ async function renderHome() {
         <span class="dot ${l.verdict}"></span>
         <span><span class="l-head"></span><br><span class="l-sub"></span></span></a>`;
     $(".l-head", li).textContent = l.headline || "…";
+    $(".l-head", li).dir = "auto";
     $(".l-sub", li).textContent = (l.sender || "") + when + (l.handled ? ` · ${t("done")}` : "");
     list.append(li);
   }
@@ -229,6 +230,8 @@ async function renderLetter(id) {
   const a = L.analysis;
   const scam = a.verdict === "scam_warning";
   mount("#tpl-letter");
+  // Model-written text may be in a different script than the UI (e.g. a Russian letter in a Persian UI).
+  view.querySelectorAll("#headline, #summary, #steps, #dates, #signs, #words, #qa, #sender").forEach((el) => (el.dir = "auto"));
 
   const v = $("#verdict");
   v.classList.add(a.verdict);
