@@ -1,0 +1,169 @@
+{
+ "today": "2026-10-03",
+ "letters": {
+  "01_water_bill": {
+   "verdict": [
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-10-20"
+   ],
+   "amount": 84.17,
+   "direction": "you_owe",
+   "scam": false
+  },
+  "02_shutoff": {
+   "verdict": [
+    "urgent"
+   ],
+   "deadlines": [
+    "2026-10-08"
+   ],
+   "amount": 212.4,
+   "direction": "you_owe",
+   "scam": false
+  },
+  "03_eob": {
+   "verdict": [
+    "file_it"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": false
+  },
+  "04_clinic_bill": {
+   "verdict": [
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-11-01"
+   ],
+   "amount": 35.0,
+   "direction": "you_owe",
+   "scam": false
+  },
+  "05_jury": {
+   "verdict": [
+    "urgent",
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-10-12",
+    "2026-10-27"
+   ],
+   "amount": null,
+   "direction": null,
+   "scam": false
+  },
+  "06_ssn_scam": {
+   "verdict": [
+    "scam_warning"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true
+  },
+  "07_prize_scam": {
+   "verdict": [
+    "scam_warning"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true
+  },
+  "08_warranty_ad": {
+   "verdict": [
+    "file_it",
+    "scam_warning"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": null
+  },
+  "09_rx_ready": {
+   "verdict": [
+    "action_needed",
+    "urgent"
+   ],
+   "deadlines": [
+    "2026-10-11"
+   ],
+   "amount": 4.0,
+   "direction": "you_owe",
+   "scam": false,
+   "deadline_optional": true
+  },
+  "10_property_tax": {
+   "verdict": [
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-11-15"
+   ],
+   "amount": 1842.0,
+   "direction": "you_owe",
+   "scam": false
+  },
+  "11_plan_change": {
+   "verdict": [
+    "action_needed",
+    "file_it"
+   ],
+   "deadlines": [
+    "2026-12-07"
+   ],
+   "amount": null,
+   "direction": null,
+   "scam": false,
+   "deadline_optional": true
+  },
+  "12_refund": {
+   "verdict": [
+    "file_it",
+    "action_needed"
+   ],
+   "deadlines": [],
+   "amount": 63.5,
+   "direction": "you_receive",
+   "scam": false
+  },
+  "13_appointment": {
+   "verdict": [
+    "urgent",
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-10-06"
+   ],
+   "amount": null,
+   "direction": null,
+   "scam": false
+  },
+  "14_bank_lock_scam": {
+   "verdict": [
+    "scam_warning"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true
+  },
+  "15_cd_maturity": {
+   "verdict": [
+    "file_it",
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-10-18"
+   ],
+   "amount": null,
+   "direction": null,
+   "scam": false,
+   "deadline_optional": true
+  }
+ }
+}

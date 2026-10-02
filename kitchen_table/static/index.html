@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6efe3">
+<title>Kitchen Table</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar">
+  <button class="icon-btn" id="backBtn" hidden aria-label="Back">←</button>
+  <h1 id="appName">Kitchen Table</h1>
+  <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙</button>
+</header>
+
+<main id="view" aria-live="polite"></main>
+
+<input type="file" id="photoInput" accept="image/*" capture="environment" hidden>
+<input type="file" id="audioInput" accept="audio/*" capture hidden>
+
+<template id="tpl-setup">
+  <section class="card setup">
+    <h2 data-t="welcome"></h2>
+    <div class="lang-grid" id="langGrid"></div>
+    <label class="field"><span data-t="helper_name"></span>
+      <input id="helperName" autocomplete="off" data-ph="helper_placeholder"></label>
+    <label class="field"><span data-t="helper_lang"></span>
+      <select id="helperLang"></select></label>
+    <button class="big primary" id="saveSetup" data-t="save"></button>
+  </section>
+</template>
+
+<template id="tpl-home">
+  <section class="hero">
+    <p class="tagline" data-t="tagline"></p>
+    <div id="pagesTray" class="tray" hidden>
+      <p class="tray-count"></p>
+      <div class="thumbs"></div>
+      <button class="big secondary" id="addPage" data-t="add_page"></button>
+      <button class="big primary" id="explainBtn" data-t="read_it"></button>
+    </div>
+    <button class="big primary camera" id="cameraBtn"><span aria-hidden="true">📷</span> <span data-t="read_letter"></span></button>
+    <p class="private"><span aria-hidden="true">🔒</span> <span data-t="private_note"></span></p>
+  </section>
+  <section>
+    <h2 data-t="recent"></h2>
+    <ul class="letters" id="letterList"></ul>
+  </section>
+</template>
+
+<template id="tpl-working">
+  <section class="working">
+    <div class="envelope" aria-hidden="true"><div class="flap"></div><div class="paper"></div></div>
+    <p class="working-msg" id="workingMsg"></p>
+    <p class="working-sub" id="workingSub"></p>
+  </section>
+</template>
+
+<template id="tpl-letter">
+  <section class="verdict" id="verdict">
+    <div class="verdict-icon" aria-hidden="true"></div>
+    <p class="verdict-label"></p>
+  </section>
+  <p class="scam-advice" id="scamAdvice" hidden></p>
+  <section class="card">
+    <p class="from"><span data-t="sender"></span>: <b id="sender"></b></p>
+    <h2 id="headline"></h2>
+    <p id="summary" class="summary"></p>
+    <button class="big secondary" id="speakBtn"><span aria-hidden="true">🔊</span> <span data-t="read_aloud"></span></button>
+    <p class="low-conf" id="lowConf" hidden></p>
+  </section>
+  <section class="card" id="stepsCard">
+    <h3 data-t="what_to_do"></h3>
+    <ol id="steps" class="steps"></ol>
+  </section>
+  <section class="card" id="datesCard" hidden>
+    <h3 data-t="deadlines"></h3>
+    <ul id="dates" class="dates"></ul>
+    <a class="big secondary" id="icsLink" download><span aria-hidden="true">📅</span> <span data-t="add_calendar"></span></a>
+  </section>
+  <section class="card" id="moneyCard" hidden>
+    <h3 data-t="money"></h3>
+    <p class="money" id="money"></p>
+  </section>
+  <section class="card warn" id="signsCard" hidden>
+    <h3 data-t="warning_signs"></h3>
+    <ul id="signs"></ul>
+  </section>
+  <section class="card" id="wordsCard" hidden>
+    <h3 data-t="words"></h3>
+    <dl id="words" class="words"></dl>
+  </section>
+  <section class="card" id="contactsCard" hidden>
+    <h3 data-t="contacts"></h3>
+    <ul id="contacts" class="contacts"></ul>
+  </section>
+  <section class="card ask">
+    <h3 data-t="ask"></h3>
+    <div id="qa" class="qa"></div>
+    <form id="askForm" class="ask-row">
+      <input id="askInput" data-ph="ask_placeholder" autocomplete="off">
+      <button class="primary" data-t="ask_send"></button>
+    </form>
+    <button class="big secondary" id="micBtn"><span aria-hidden="true">🎤</span> <span data-t="speak"></span></button>
+  </section>
+  <section class="actions">
+    <button class="big secondary" id="shareBtn"></button>
+    <button class="big done-btn" id="doneBtn"></button>
+  </section>
+  <details class="card original">
+    <summary data-t="original"></summary>
+    <pre id="transcript"></pre>
+    <p class="meta" id="meta"></p>
+    <button class="link danger" id="deleteBtn" data-t="delete"></button>
+  </details>
+</template>
+
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="wav.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
