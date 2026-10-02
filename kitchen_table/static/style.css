@@ -83,7 +83,7 @@ button, .big { font: inherit; }
 .thumb { position: relative; }
 .thumb img { width: 84px; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); }
 .thumb button {
-  position: absolute; top: -10px; right: -10px; width: 36px; height: 36px; border-radius: 50%;
+  position: absolute; top: -14px; right: -14px; width: 48px; height: 48px; border-radius: 50%;
   border: 0; background: var(--ink); color: var(--paper); font-size: 1rem; cursor: pointer;
 }
 
@@ -153,7 +153,7 @@ button, .big { font: inherit; }
 
 .contacts { list-style: none; padding: 0; margin: 0; }
 .contacts li { padding: .4rem 0; }
-.contacts a { color: var(--accent); font-weight: 600; }
+.contacts a { color: var(--accent); font-weight: 600; display: inline-flex; align-items: center; min-height: 48px; }
 .contacts .nolink { font-weight: 600; text-decoration: line-through; color: var(--muted); }
 
 .qa .q, .qa .a { padding: 10px 14px; border-radius: 14px; margin: 8px 0; max-width: 92%; }
@@ -173,10 +173,10 @@ input, select {
 .done-btn { background: var(--green-bg); color: var(--green); border-color: var(--green-bg); }
 .done-btn.is-done { background: var(--green); color: #fff; }
 
-.original summary { cursor: pointer; font-weight: 650; min-height: 44px; display: flex; align-items: center; }
+.original summary { cursor: pointer; font-weight: 650; min-height: 48px; display: flex; align-items: center; }
 .original pre { white-space: pre-wrap; font-size: .8rem; font-family: ui-monospace, Menlo, Consolas, monospace; background: var(--paper); padding: 12px; border-radius: 10px; max-height: 50vh; overflow: auto; }
 .meta { color: var(--muted); font-size: .75rem; }
-.link { background: none; border: 0; padding: 8px 0; cursor: pointer; text-decoration: underline; }
+.link { background: none; border: 0; padding: 8px 0; min-height: 48px; cursor: pointer; text-decoration: underline; }
 .danger { color: var(--red); }
 
 .setup .lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin: 1rem 0; }
