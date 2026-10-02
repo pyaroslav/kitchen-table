@@ -13,11 +13,11 @@ import io
 import re
 from datetime import date, datetime
 
-from PIL import Image, ImageOps
+from PIL import Image, ImageEnhance, ImageFilter, ImageOps, ImageStat
 
 from . import config, redflags
 from .languages import name as lang_name
-from .ollama_client import chat
+from .ollama_client import OllamaError, chat
 
 VERDICTS = ["file_it", "action_needed", "urgent", "scam_warning"]
 
@@ -81,11 +81,13 @@ Verdict rules:
 Advertisements dressed up as official notices ("final notice" for a car warranty) are "file_it" or "scam_warning", never "urgent".
 
 Write headline, summary, steps[].text, deadlines[].what, scam_signals and glossary[].meaning in {lang}.
+scam_signals: the warning signs that really apply to THIS letter, each rewritten in {lang} in your own simple words (never copy the English text below). Empty if it is not suspicious.
 - headline: one short sentence saying what this is and whether they need to worry.
 - summary: 2-4 short sentences, plain words, like a kind grown-up child explaining at the kitchen table. No jargon.
 - steps: the concrete things to do, in order. Empty if there is nothing to do. For a suspected scam, steps are: don't pay, don't call numbers in the letter, call family.
 - deadlines: every date they must act by, as YYYY-MM-DD. Do not include dates that are only informational (statement date, date of service).
 - glossary: up to 4 hard words from the letter (keep the term in the original language) with a plain explanation.
+- money: the main amount. direction "you_owe" if the letter asks them to pay it (bills, past-due balances, copays, fees, debts), "you_receive" for refunds/checks/benefits paid to them, "none" only if no money is requested or paid. For a suspected scam use "none".
 - contacts: phone numbers / websites exactly as printed. Leave sender and contacts in the original language.
 - family_note: 1-3 sentences in {helper_lang} for their adult child, who handles paperwork: who sent it, what it wants, by when, amount.
 - confidence: "low" if the transcript has many [unreadable] parts or key facts are missing.
@@ -99,19 +101,43 @@ LETTER TRANSCRIPT:
 >>>"""
 
 
-def prepare_image(blob: bytes) -> bytes:
-    """Rotate per EXIF, shrink, re-encode as JPEG. Also strips EXIF/GPS metadata."""
+def photo_quality(img: Image.Image) -> dict:
+    """Cheap measurements that predict a misread: too dark, too flat, too blurry."""
+    gray = img.convert("L")
+    gray.thumbnail((800, 800))
+    stat = ImageStat.Stat(gray)
+    edges = ImageStat.Stat(gray.filter(ImageFilter.FIND_EDGES))
+    q = {"brightness": round(stat.mean[0]), "contrast": round(stat.stddev[0]), "sharpness": round(edges.var[0])}
+    q["poor"] = q["brightness"] < 90 or q["contrast"] < 35 or q["sharpness"] < 150
+    return q
+
+
+def prepare_image(blob: bytes) -> tuple[bytes, dict]:
+    """Rotate per EXIF, fix poor lighting, shrink, re-encode as JPEG (drops EXIF/GPS)."""
     img = Image.open(io.BytesIO(blob))
     img = ImageOps.exif_transpose(img).convert("RGB")
+    q = photo_quality(img)
+    if q["poor"]:
+        img = ImageOps.autocontrast(img, cutoff=1)
+        img = ImageEnhance.Sharpness(img).enhance(2.0)
+        q["enhanced"] = True
     img.thumbnail((config.MAX_IMAGE_EDGE, config.MAX_IMAGE_EDGE))
     out = io.BytesIO()
     img.save(out, "JPEG", quality=88)
-    return out.getvalue()
+    return out.getvalue(), q
 
 
 def transcribe(images: list[bytes], model: str | None = None):
-    res = chat([{"role": "user", "content": TRANSCRIBE_PROMPT, "media": images}],
-               model=model, temperature=0.0)
+    msgs = [{"role": "user", "content": TRANSCRIBE_PROMPT, "media": images}]
+    try:
+        res = chat(msgs, model=model, temperature=0.0, extra={"num_predict": 3000})
+    except OllamaError as e:
+        # Greedy decoding occasionally loops on repetitive layouts (tables, dashed stubs).
+        # One retry with a little sampling and a repeat penalty gets past it.
+        if "repeat" not in str(e):
+            raise
+        res = chat(msgs, model=model, temperature=0.3,
+                   extra={"num_predict": 3000, "repeat_penalty": 1.15, "repeat_last_n": 256})
     return res.text.strip(), res
 
 
@@ -171,12 +197,18 @@ def postprocess(a: dict, hits: list[dict], today: date) -> dict:
             reasons.append("strong_scam_rule")
     elif verdict in ("file_it", "action_needed") and a.get("money", {}).get("direction") != "you_receive":
         upcoming = [d for d in deadlines if d["days_left"] >= 0]
-        if verdict == "action_needed" and upcoming and upcoming[0]["days_left"] <= 7:
-            verdict = "urgent"
-            reasons.append("deadline_within_7_days")
         if verdict == "file_it" and upcoming and a.get("steps"):
             verdict = "action_needed"
             reasons.append("has_steps_and_deadline")
+        if verdict == "action_needed" and upcoming and upcoming[0]["days_left"] <= 7:
+            verdict = "urgent"
+            reasons.append("deadline_within_7_days")
+
+    if verdict == "scam_warning":
+        # A scammer's "deadline" is pressure, not an appointment: keep it off the calendar.
+        a["deadlines"] = []
+        for s in a.get("steps", []):
+            s["by_date"] = None
 
     a["model_verdict"] = model_verdict
     a["verdict"] = verdict
@@ -187,12 +219,20 @@ def postprocess(a: dict, hits: list[dict], today: date) -> dict:
 
 def read_letter(images: list[bytes], lang: str, helper_lang: str = "en",
                 model: str | None = None, today: date | None = None) -> dict:
-    prepared = [prepare_image(b) for b in images]
-    transcript, r1 = transcribe(prepared, model=model)
+    prepared, quality = zip(*(prepare_image(b) for b in images))
+    transcript, r1 = transcribe(list(prepared), model=model)
     analysis, r2 = analyse(transcript, lang, helper_lang, today=today, model=model)
+    if any(q["poor"] for q in quality):
+        # A misread digit on a dark photo turns "due Oct 20, 2026" into "old bill from 2020".
+        # Never let a bad photo produce a confident "nothing to do".
+        analysis["confidence"] = "low"
+        analysis["overrides"].append("poor_photo")
+        if analysis["verdict"] == "file_it":
+            analysis["verdict"] = "unsure"
     return {
         "transcript": transcript,
         "analysis": analysis,
+        "photo_quality": list(quality),
         "timing": {
             "read_seconds": round(r1.seconds, 1),
             "explain_seconds": round(r2.seconds, 1),

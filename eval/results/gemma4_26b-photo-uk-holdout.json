@@ -1,0 +1,147 @@
+{
+ "model": "gemma4:26b",
+ "variant": "photo",
+ "lang": "uk",
+ "summary": {
+  "n": 6,
+  "verdict_acc": [
+   1.0,
+   6
+  ],
+  "safe_rate": [
+   1.0,
+   6
+  ],
+  "model_only_verdict_acc": [
+   1.0,
+   6
+  ],
+  "scam_recall": 1.0,
+  "model_only_scam_recall": 1.0,
+  "scam_false_alarms": 0,
+  "deadline_recall": 1.0,
+  "amount_acc": [
+   1.0,
+   1
+  ],
+  "in_language": [
+   1.0,
+   6
+  ],
+  "median_seconds": 3.5
+ },
+ "rows": [
+  {
+   "id": "x01_homestead_service",
+   "set": "holdout",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 4.4,
+   "overrides": []
+  },
+  {
+   "id": "x02_hoa_violation",
+   "set": "holdout",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-10-14"
+   ],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.5,
+   "overrides": []
+  },
+  {
+   "id": "x03_rebate_cashapp",
+   "set": "holdout",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 4.1000000000000005,
+   "overrides": []
+  },
+  {
+   "id": "x04_revenue_adjustment",
+   "set": "holdout",
+   "verdict": "file_it",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 3.5,
+   "overrides": []
+  },
+  {
+   "id": "x05_lab_results",
+   "set": "holdout",
+   "verdict": "urgent",
+   "model_verdict": "urgent",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2026-10-08"
+   ],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.5,
+   "overrides": []
+  },
+  {
+   "id": "x06_library_ad",
+   "set": "holdout",
+   "verdict": "file_it",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 2.8,
+   "overrides": []
+  }
+ ]
+}

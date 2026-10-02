@@ -61,5 +61,7 @@
  "error_model": "El programa de ayuda en la computadora no está encendido. Pídele a {helper} que lo encienda.",
  "error_read": "No pude leer esa foto. Intenta con más luz.",
  "family": "tu familia",
- "seconds": "{n} segundos"
+ "seconds": "{n} segundos",
+ "v_unsure": "No estoy seguro. La foto está muy oscura o borrosa. Toma otra con buena luz.",
+ "retake": "Tomar otra foto"
 }

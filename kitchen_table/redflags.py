@@ -44,6 +44,11 @@ RULES = [
     Rule("ssn_suspended", True,
          _r(r"\bsocial security (number|card) (has been |is |will be )?(suspended|blocked|frozen|cancell?ed)\b"),
          "Says your Social Security number is 'suspended'. That does not happen."),
+    # Official-looking solicitations (deed copies, "tax relief", record services) must
+    # print a disclaimer that they aren't the government. That line plus a fee is the tell.
+    Rule("lookalike_official", True,
+         _r(r"\bnot (affiliated|associated) with (any|the) (county|state|federal|city|government)|\bis not a government agency\b|\bnot (been )?(approved|endorsed) by any government"),
+         "Looks official, but the small print says it is a private company, not the government."),
     Rule("extreme_urgency", False,
          _r(r"\b(within 24 hours|within 48 hours|immediately or|final notice|act now|today only|last chance)\b"),
          "Uses extreme urgency to rush you."),

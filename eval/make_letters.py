@@ -192,6 +192,137 @@ letter("15_cd_maturity", page("#003366", "Willamette Community Bank", "Deposit S
     {"verdict": ["file_it", "action_needed"], "deadlines": ["2026-10-18"], "amount": None, "direction": None, "scam": False, "deadline_optional": True})
 
 
+# ---------------------------------------------------------------- hard set
+# Letters designed to break the easy path: look-alike scams with no keyword the
+# rules know, a deadline hidden on page 2 or in fine print, a non-English letter,
+# and terrible photos.
+
+HARD = []
+
+
+def hard(id, pages, truth, degrade="normal"):
+    HARD.append({"id": id, "pages": pages, "truth": truth, "degrade": degrade})
+
+
+hard("h01_deed_service", [page("#3b2f2f", "Property Record Retrieval Department", "Homeowner Document Services",
+    "Parcel: 11-04-27-B-0318<br>Notice date: September 26, 2026<br>Response requested by: October 15, 2026",
+    """<h1>PROPERTY DEED NOTICE — RESPONSE REQUESTED</h1>
+<p>Our records show you do not have an official certified copy of your property deed for 418 Linden Court. It is recommended that all homeowners obtain a certified copy.</p>
+<div class=box>Document fee: <span class=big>$89.00</span><br>Response requested by: <b>October 15, 2026</b></div>
+<p>Return the form below with your payment to receive your certified deed copy and property profile.</p>
+<p class=fine>Property Record Retrieval Department is a private company and is not affiliated with any county or government agency. A copy of your deed may be obtained from the County Recorder for a small fee. This is not a bill. This product or service has not been approved or endorsed by any government agency.</p>""")],
+    {"verdict": ["scam_warning", "file_it"], "deadlines": [], "amount": None, "direction": None, "scam": True})
+
+hard("h02_page_two", [page("#1b3a5c", "Oregon Coast Electric Cooperative", "Member Accounts",
+    "Account: OCE-90021<br>Date: September 28, 2026<br>Member line: (541) 555-0170",
+    """<h1>Important information about your account</h1>
+<p>Thank you for being a member of Oregon Coast Electric Cooperative. This fall we are upgrading meters in your neighborhood. A technician may visit your property; no appointment is necessary and there is no charge.</p>
+<p>We are also updating our billing system. Your account number and member benefits are not changing.</p>
+<p>Please see the next page for your current statement.</p>"""),
+    page("#1b3a5c", "Oregon Coast Electric Cooperative", "Statement — page 2 of 2", "Account: OCE-90021",
+    """<h1>Current statement</h1>
+<table><tr><th>Previous balance</th><td>$0.00</td></tr><tr><th>Electric service Aug 25 – Sep 24</th><td>$156.20</td></tr>
+<tr><th><b>Total due</b></th><td><b>$156.20</b></td></tr><tr><th><b>Due date</b></th><td><b>10/09/2026</b></td></tr></table>""")],
+    {"verdict": ["urgent"], "deadlines": ["2026-10-09"], "amount": 156.20, "direction": "you_owe", "scam": False})
+
+hard("h03_debt_validation", [page("#333", "Summit Recovery Partners, LLC", "Licensed Collection Agency · Portland, OR",
+    "Reference: SRP-4418-207<br>Date: September 25, 2026<br>Phone: (503) 555-0126",
+    """<h1>Validation Notice</h1>
+<p>Summit Recovery Partners is a debt collector. We are trying to collect a debt that you owe to Riverside Family Clinic. We will use any information you give us to help collect the debt.</p>
+<table><tr><th>As of August 30, 2026 you owed</th><td>$1,284.55</td></tr><tr><th>Total amount of the debt now</th><td>$1,284.55</td></tr></table>
+<div class=box>How can you dispute the debt? Call or write to us by <b>November 9, 2026</b> to dispute all or part of the debt. If you do not, we will assume that our information is correct.</div>
+<p>If you write to us by November 9, 2026, we must stop collection on any amount you dispute until we send you information that shows you owe the debt.</p>""")],
+    {"verdict": ["action_needed", "urgent"], "deadlines": ["2026-11-09"], "amount": 1284.55, "direction": "you_owe", "scam": False})
+
+hard("h04_fine_print", [page("#2e5d34", "Cascade Valley Health Plan", "Member Services",
+    "Member ID: CVH-882014<br>Date: September 21, 2026<br>Member services: 1-800-555-0177",
+    """<h1>Thank you for being a valued member!</h1>
+<p>We're glad you chose Cascade Valley Health Plan this year. Inside you'll find tips for staying healthy this fall: get your flu shot, walk 20 minutes a day, and ask your doctor about a free wellness visit.</p>
+<p>Flu shots are available at no cost at any in-network pharmacy.</p>
+<p class=fine>Coverage renewal: because your income verification is incomplete, your coverage will end on October 31, 2026 unless we receive the enclosed Income Verification Form (CV-12) by October 24, 2026. Questions: 1-800-555-0177.</p>""")],
+    {"verdict": ["action_needed", "urgent"], "deadlines": ["2026-10-24"], "amount": None, "direction": None, "scam": False})
+
+hard("h05_spanish_school", [page("#7a3e00", "Distrito Escolar de Brookhaven", "Oficina de Transporte",
+    "Fecha: 29 de septiembre de 2026<br>Teléfono: (541) 555-0138",
+    """<h1>Aviso: formulario de transporte escolar</h1>
+<p>Estimado padre, madre o tutor:</p>
+<p>Su nieto Mateo está inscrito en la ruta de autobús 14. Para continuar con el servicio de autobús, debe firmar y devolver el formulario de permiso adjunto a más tardar el <b>16 de octubre de 2026</b>.</p>
+<p>Si no recibimos el formulario, el estudiante no podrá usar el autobús a partir del 19 de octubre. El servicio es gratuito.</p>""")],
+    {"verdict": ["action_needed"], "deadlines": ["2026-10-16"], "amount": None, "direction": None, "scam": False})
+
+hard("h06_tax_relief", [page("#0b2a5b", "National Tax Resolution Center", "Notice of Pending Levy Action",
+    "Notice: NTR-26-55871<br>Date: September 27, 2026<br>Resolution line: 1-866-555-0105",
+    """<h1 class=red>NOTICE OF STATE TAX LIEN / LEVY</h1>
+<p>Public records indicate a tax matter may be associated with your name. Unresolved tax debts can result in wage garnishment, bank levy, or seizure of property.</p>
+<p>You may qualify for a reduced settlement. Call our Resolution Line at 1-866-555-0105 today to speak with a tax relief specialist and stop collection activity. Have your Social Security number and bank information ready.</p>
+<p class=fine>National Tax Resolution Center is a private tax resolution firm and is not a government agency.</p>""", stamp="FINAL NOTICE")],
+    {"verdict": ["scam_warning", "file_it"], "deadlines": [], "amount": None, "direction": None, "scam": True})
+
+hard("h07_benefit_card", [page("#123c69", "Senior Benefits Card Center", "Member Enrollment",
+    "Ref: SBC-0091-26<br>Date: September 30, 2026<br>Activation line: 1-855-555-0182",
+    """<h1>Your new benefits card has been approved</h1>
+<p>Good news! You have been approved for a new prepaid grocery and utility allowance card worth up to $2,400 per year.</p>
+<p>To activate your card, call 1-855-555-0182. For verification, please have your Medicare number, date of birth and bank routing number ready. Activation must be completed this month.</p>""")],
+    {"verdict": ["scam_warning"], "deadlines": [], "amount": None, "direction": None, "scam": True})
+
+hard("h08_dark_blurry", "01_water_bill",
+    {"verdict": ["action_needed"], "deadlines": ["2026-10-20"], "amount": 84.17, "direction": "you_owe", "scam": False},
+    degrade="awful")
+
+hard("h09_sideways", "04_clinic_bill",
+    {"verdict": ["action_needed"], "deadlines": ["2026-11-01"], "amount": 35.00, "direction": "you_owe", "scam": False},
+    degrade="sideways")
+
+
+# ---------------------------------------------------------------- held-out set
+# Written AFTER the rules and prompts were tuned on core+hard, run once, not tuned on.
+
+hard("x01_homestead_service", [page("#2b2b52", "Homestead Exemption Processing Center", "Property Owner Services",
+    "File No: HEP-77120<br>Date: September 29, 2026<br>Reply by: October 20, 2026",
+    """<h1>HOMESTEAD EXEMPTION — ACTION REQUIRED</h1>
+<p>Our review of public property records shows that the residence at 418 Linden Court may be eligible for a homestead exemption that could lower your property taxes.</p>
+<p>For a one-time service charge of <b>$149.00</b> we will prepare and submit your exemption application on your behalf. Return the enclosed form with your check by October 20, 2026.</p>
+<p class=fine>We are a private document preparation service. You may apply for the exemption yourself directly with the County Assessor at no cost.</p>""")],
+    {"verdict": ["scam_warning", "file_it"], "deadlines": [], "amount": None, "direction": None, "scam": True}, )
+
+hard("x02_hoa_violation", [page("#335533", "Linden Court Homeowners Association", "Board of Directors",
+    "Date: September 30, 2026<br>Management office: (541) 555-0157",
+    """<h1>Notice of Violation — Second Notice</h1>
+<p>During the September 28 inspection, trash bins were observed stored in front of the garage at Unit 3, in violation of Section 7.2 of the Rules &amp; Regulations.</p>
+<p>Please move the bins out of view by <b>October 14, 2026</b>. If the violation is not corrected, a fine of $50.00 will be assessed to your account.</p>
+<p>If you believe this notice is in error, you may request a hearing with the Board by calling the management office.</p>""")],
+    {"verdict": ["action_needed", "urgent"], "deadlines": ["2026-10-14"], "amount": None, "direction": None, "scam": False})
+
+hard("x03_rebate_cashapp", [page("#0a5a5a", "Energy Rebate Distribution Office", "Senior Utility Assistance Program",
+    "Ref: ERD-5512<br>Date: September 30, 2026<br>Agent: rebates.office@outlook.com",
+    """<h1>You qualify for a $650 utility rebate</h1>
+<p>Congratulations, your household has been selected for the Senior Utility Assistance rebate of $650.00.</p>
+<p>To release the rebate, a refundable verification deposit of $45.00 is required. Send the deposit by Cash App to $RebateDesk and email a screenshot to rebates.office@outlook.com. Unclaimed rebates expire in 72 hours.</p>""")],
+    {"verdict": ["scam_warning"], "deadlines": [], "amount": None, "direction": None, "scam": True})
+
+hard("x04_revenue_adjustment", [page("#3d3d3d", "Oregon Department of Revenue", "Personal Income Tax Division",
+    "Letter ID: L1408822916<br>Date: September 23, 2026<br>Phone: (503) 555-0114",
+    """<h1>Notice of Adjustment to Your 2025 Return</h1>
+<p>We adjusted your 2025 Oregon return because the amount of your senior medical deduction did not match our records.</p>
+<table><tr><th>Refund you claimed</th><td>$412.00</td></tr><tr><th>Adjusted refund</th><td>$318.00</td></tr></table>
+<p>Your adjusted refund of $318.00 will be issued within 4–6 weeks. If you disagree, you must file a written objection within 90 days of the date of this notice. No payment is required.</p>""")],
+    {"verdict": ["file_it", "action_needed"], "deadlines": [], "amount": 318.00, "direction": "you_receive", "scam": False})
+
+hard("x05_lab_results", [page("#6a2c70", "Riverside Family Clinic", "Patient Portal Notice",
+    "Date: October 1, 2026<br>Nurse line: (541) 555-0166",
+    """<h1>Your lab results are available</h1>
+<p>Dr. Elena Varga has reviewed your recent blood test. Most results are in the normal range.</p>
+<p>Your potassium level was slightly high. Dr. Varga would like you to <b>repeat the blood test within the next 5 days</b> and to avoid potassium supplements and salt substitutes until then. Please call the nurse line to schedule a lab visit.</p>""")],
+    {"verdict": ["urgent", "action_needed"], "deadlines": [], "amount": None, "direction": None, "scam": False})
+
+hard("x06_library_ad", [page("#7a3e00", "Brookhaven Public Library Foundation", "Annual Fall Book Sale",
+    "Date: September 18, 2026",
+    """<h1>You're invited: Fall Book Sale!</h1>
+<p>Join us Saturday, October 17, 10 AM – 3 PM, in the library community room. Hardcovers $1, paperbacks 50¢. Members get early access from 9 AM.</p>
+<p>All proceeds support children's reading programs. Donations of gently used books are welcome through October 10.</p>""")],
+    {"verdict": ["file_it"], "deadlines": [], "amount": None, "direction": None, "scam": False})
+
+
 def chrome() -> str:
     for c in ("google-chrome", "chromium", "chromium-browser"):
         if shutil.which(c):
@@ -199,7 +330,13 @@ def chrome() -> str:
     raise SystemExit("needs google-chrome or chromium")
 
 
-def phoneify(src: Path, dst: Path, seed: int):
+def render(exe: str, html: Path, png: Path):
+    subprocess.run([exe, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=1.5",
+                    "--window-size=816,1056", f"--screenshot={png}", html.resolve().as_uri()],
+                   check=True, capture_output=True)
+
+
+def phoneify(src: Path, dst: Path, seed: int, degrade: str = "normal"):
     """Make a clean render look like a quick phone snapshot on a kitchen table."""
     rnd = random.Random(seed)
     img = Image.open(src).convert("RGB")
@@ -222,8 +359,15 @@ def phoneify(src: Path, dst: Path, seed: int):
     img = Image.composite(Image.new("RGB", (W, H), (0, 0, 0)), img, shade)
     img = ImageEnhance.Brightness(img).enhance(rnd.uniform(0.85, 1.0))
     img = img.filter(ImageFilter.GaussianBlur(rnd.uniform(0.4, 0.9)))
-    img = img.resize((int(W * 0.75), int(H * 0.75)))
-    img.save(dst, "JPEG", quality=rnd.randint(70, 82))
+    if degrade == "awful":  # evening kitchen light, shaky hands
+        img = ImageEnhance.Brightness(img).enhance(0.45)
+        img = ImageEnhance.Contrast(img).enhance(0.6)
+        img = img.filter(ImageFilter.GaussianBlur(2.2))
+    if degrade == "sideways":
+        img = img.rotate(90, expand=True)
+    scale = 0.5 if degrade == "awful" else 0.75
+    img = img.resize((int(img.size[0] * scale), int(img.size[1] * scale)))
+    img.save(dst, "JPEG", quality=55 if degrade == "awful" else rnd.randint(70, 82))
 
 
 def _persp(pa, pb):
@@ -245,12 +389,29 @@ def main():
         html = OUT / f"{L['id']}.html"
         html.write_text(L["html"], encoding="utf8")
         png = OUT / f"{L['id']}.png"
-        subprocess.run([exe, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--force-device-scale-factor=1.5",
-                        "--window-size=816,1056", f"--screenshot={png}", html.resolve().as_uri()],
-                       check=True, capture_output=True)
+        render(exe, html, png)
         phoneify(png, OUT / f"{L['id']}.photo.jpg", seed=i)
-        truth["letters"][L["id"]] = L["truth"]
+        truth["letters"][L["id"]] = {**L["truth"], "set": "core", "photos": [f"{L['id']}.photo.jpg"]}
         print("rendered", L["id"])
+    for i, H in enumerate(HARD):
+        if isinstance(H["pages"], str):  # reuse a core letter with a nastier photo
+            src_pngs = [OUT / f"{H['pages']}.png"]
+        else:
+            src_pngs = []
+            for n, html_text in enumerate(H["pages"]):
+                html = OUT / f"{H['id']}.p{n + 1}.html"
+                html.write_text(html_text, encoding="utf8")
+                png = OUT / f"{H['id']}.p{n + 1}.png"
+                render(exe, html, png)
+                src_pngs.append(png)
+        photos = []
+        for n, png in enumerate(src_pngs):
+            dst = OUT / f"{H['id']}.p{n + 1}.photo.jpg"
+            phoneify(png, dst, seed=100 + i * 10 + n, degrade=H["degrade"])
+            photos.append(dst.name)
+        group = "holdout" if H["id"].startswith("x") else "hard"
+        truth["letters"][H["id"]] = {**H["truth"], "set": group, "photos": photos}
+        print("rendered", H["id"])
     (OUT / "truth.json").write_text(json.dumps(truth, indent=1))
 
 

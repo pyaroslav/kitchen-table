@@ -102,6 +102,7 @@ button, .big { font: inherit; }
 .dot.file_it { background: var(--green); }
 .dot.action_needed { background: #d69a1a; }
 .dot.urgent { background: var(--red); }
+.dot.unsure { background: var(--muted); }
 .dot.scam_warning { background: var(--scam-bg); box-shadow: 0 0 0 3px var(--red-bg); }
 
 .verdict {
@@ -114,6 +115,7 @@ button, .big { font: inherit; }
 .verdict.action_needed { background: var(--amber-bg); color: var(--amber); }
 .verdict.urgent { background: var(--red-bg); color: var(--red); }
 .verdict.scam_warning { background: var(--scam-bg); color: var(--scam); }
+.verdict.unsure { background: var(--line); color: var(--ink); }
 .scam-advice {
   margin: -6px 0 14px; padding: 14px 18px; border-radius: var(--radius);
   border: 3px solid var(--scam-bg); font-weight: 650; font-size: 1.1rem;

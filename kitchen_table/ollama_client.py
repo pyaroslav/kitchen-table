@@ -40,6 +40,7 @@ def chat(
     schema: dict | None = None,
     temperature: float = 0.1,
     num_ctx: int = 16384,
+    extra: dict | None = None,
 ) -> ChatResult:
     """Send one non-streaming chat request. `messages[i]["media"]` may hold raw bytes."""
     payload_msgs = []
@@ -55,7 +56,7 @@ def chat(
         "messages": payload_msgs,
         "stream": False,
         "think": False,
-        "options": {"temperature": temperature, "num_ctx": num_ctx},
+        "options": {"temperature": temperature, "num_ctx": num_ctx, **(extra or {})},
         "keep_alive": "30m",
     }
     if schema:

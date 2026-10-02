@@ -10,7 +10,11 @@
    ],
    "amount": 84.17,
    "direction": "you_owe",
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "01_water_bill.photo.jpg"
+   ]
   },
   "02_shutoff": {
    "verdict": [
@@ -21,7 +25,11 @@
    ],
    "amount": 212.4,
    "direction": "you_owe",
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "02_shutoff.photo.jpg"
+   ]
   },
   "03_eob": {
    "verdict": [
@@ -30,7 +38,11 @@
    "deadlines": [],
    "amount": null,
    "direction": null,
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "03_eob.photo.jpg"
+   ]
   },
   "04_clinic_bill": {
    "verdict": [
@@ -41,7 +53,11 @@
    ],
    "amount": 35.0,
    "direction": "you_owe",
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "04_clinic_bill.photo.jpg"
+   ]
   },
   "05_jury": {
    "verdict": [
@@ -54,7 +70,11 @@
    ],
    "amount": null,
    "direction": null,
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "05_jury.photo.jpg"
+   ]
   },
   "06_ssn_scam": {
    "verdict": [
@@ -63,7 +83,11 @@
    "deadlines": [],
    "amount": null,
    "direction": null,
-   "scam": true
+   "scam": true,
+   "set": "core",
+   "photos": [
+    "06_ssn_scam.photo.jpg"
+   ]
   },
   "07_prize_scam": {
    "verdict": [
@@ -72,7 +96,11 @@
    "deadlines": [],
    "amount": null,
    "direction": null,
-   "scam": true
+   "scam": true,
+   "set": "core",
+   "photos": [
+    "07_prize_scam.photo.jpg"
+   ]
   },
   "08_warranty_ad": {
    "verdict": [
@@ -82,7 +110,11 @@
    "deadlines": [],
    "amount": null,
    "direction": null,
-   "scam": null
+   "scam": null,
+   "set": "core",
+   "photos": [
+    "08_warranty_ad.photo.jpg"
+   ]
   },
   "09_rx_ready": {
    "verdict": [
@@ -95,7 +127,11 @@
    "amount": 4.0,
    "direction": "you_owe",
    "scam": false,
-   "deadline_optional": true
+   "deadline_optional": true,
+   "set": "core",
+   "photos": [
+    "09_rx_ready.photo.jpg"
+   ]
   },
   "10_property_tax": {
    "verdict": [
@@ -106,7 +142,11 @@
    ],
    "amount": 1842.0,
    "direction": "you_owe",
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "10_property_tax.photo.jpg"
+   ]
   },
   "11_plan_change": {
    "verdict": [
@@ -119,7 +159,11 @@
    "amount": null,
    "direction": null,
    "scam": false,
-   "deadline_optional": true
+   "deadline_optional": true,
+   "set": "core",
+   "photos": [
+    "11_plan_change.photo.jpg"
+   ]
   },
   "12_refund": {
    "verdict": [
@@ -129,7 +173,11 @@
    "deadlines": [],
    "amount": 63.5,
    "direction": "you_receive",
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "12_refund.photo.jpg"
+   ]
   },
   "13_appointment": {
    "verdict": [
@@ -141,7 +189,11 @@
    ],
    "amount": null,
    "direction": null,
-   "scam": false
+   "scam": false,
+   "set": "core",
+   "photos": [
+    "13_appointment.photo.jpg"
+   ]
   },
   "14_bank_lock_scam": {
    "verdict": [
@@ -150,7 +202,11 @@
    "deadlines": [],
    "amount": null,
    "direction": null,
-   "scam": true
+   "scam": true,
+   "set": "core",
+   "photos": [
+    "14_bank_lock_scam.photo.jpg"
+   ]
   },
   "15_cd_maturity": {
    "verdict": [
@@ -163,7 +219,229 @@
    "amount": null,
    "direction": null,
    "scam": false,
-   "deadline_optional": true
+   "deadline_optional": true,
+   "set": "core",
+   "photos": [
+    "15_cd_maturity.photo.jpg"
+   ]
+  },
+  "h01_deed_service": {
+   "verdict": [
+    "scam_warning",
+    "file_it"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true,
+   "set": "hard",
+   "photos": [
+    "h01_deed_service.p1.photo.jpg"
+   ]
+  },
+  "h02_page_two": {
+   "verdict": [
+    "urgent"
+   ],
+   "deadlines": [
+    "2026-10-09"
+   ],
+   "amount": 156.2,
+   "direction": "you_owe",
+   "scam": false,
+   "set": "hard",
+   "photos": [
+    "h02_page_two.p1.photo.jpg",
+    "h02_page_two.p2.photo.jpg"
+   ]
+  },
+  "h03_debt_validation": {
+   "verdict": [
+    "action_needed",
+    "urgent"
+   ],
+   "deadlines": [
+    "2026-11-09"
+   ],
+   "amount": 1284.55,
+   "direction": "you_owe",
+   "scam": false,
+   "set": "hard",
+   "photos": [
+    "h03_debt_validation.p1.photo.jpg"
+   ]
+  },
+  "h04_fine_print": {
+   "verdict": [
+    "action_needed",
+    "urgent"
+   ],
+   "deadlines": [
+    "2026-10-24"
+   ],
+   "amount": null,
+   "direction": null,
+   "scam": false,
+   "set": "hard",
+   "photos": [
+    "h04_fine_print.p1.photo.jpg"
+   ]
+  },
+  "h05_spanish_school": {
+   "verdict": [
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-10-16"
+   ],
+   "amount": null,
+   "direction": null,
+   "scam": false,
+   "set": "hard",
+   "photos": [
+    "h05_spanish_school.p1.photo.jpg"
+   ]
+  },
+  "h06_tax_relief": {
+   "verdict": [
+    "scam_warning",
+    "file_it"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true,
+   "set": "hard",
+   "photos": [
+    "h06_tax_relief.p1.photo.jpg"
+   ]
+  },
+  "h07_benefit_card": {
+   "verdict": [
+    "scam_warning"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true,
+   "set": "hard",
+   "photos": [
+    "h07_benefit_card.p1.photo.jpg"
+   ]
+  },
+  "h08_dark_blurry": {
+   "verdict": [
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-10-20"
+   ],
+   "amount": 84.17,
+   "direction": "you_owe",
+   "scam": false,
+   "set": "hard",
+   "photos": [
+    "h08_dark_blurry.p1.photo.jpg"
+   ]
+  },
+  "h09_sideways": {
+   "verdict": [
+    "action_needed"
+   ],
+   "deadlines": [
+    "2026-11-01"
+   ],
+   "amount": 35.0,
+   "direction": "you_owe",
+   "scam": false,
+   "set": "hard",
+   "photos": [
+    "h09_sideways.p1.photo.jpg"
+   ]
+  },
+  "x01_homestead_service": {
+   "verdict": [
+    "scam_warning",
+    "file_it"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true,
+   "set": "holdout",
+   "photos": [
+    "x01_homestead_service.p1.photo.jpg"
+   ]
+  },
+  "x02_hoa_violation": {
+   "verdict": [
+    "action_needed",
+    "urgent"
+   ],
+   "deadlines": [
+    "2026-10-14"
+   ],
+   "amount": null,
+   "direction": null,
+   "scam": false,
+   "set": "holdout",
+   "photos": [
+    "x02_hoa_violation.p1.photo.jpg"
+   ]
+  },
+  "x03_rebate_cashapp": {
+   "verdict": [
+    "scam_warning"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": true,
+   "set": "holdout",
+   "photos": [
+    "x03_rebate_cashapp.p1.photo.jpg"
+   ]
+  },
+  "x04_revenue_adjustment": {
+   "verdict": [
+    "file_it",
+    "action_needed"
+   ],
+   "deadlines": [],
+   "amount": 318.0,
+   "direction": "you_receive",
+   "scam": false,
+   "set": "holdout",
+   "photos": [
+    "x04_revenue_adjustment.p1.photo.jpg"
+   ]
+  },
+  "x05_lab_results": {
+   "verdict": [
+    "urgent",
+    "action_needed"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": false,
+   "set": "holdout",
+   "photos": [
+    "x05_lab_results.p1.photo.jpg"
+   ]
+  },
+  "x06_library_ad": {
+   "verdict": [
+    "file_it"
+   ],
+   "deadlines": [],
+   "amount": null,
+   "direction": null,
+   "scam": false,
+   "set": "holdout",
+   "photos": [
+    "x06_library_ad.p1.photo.jpg"
+   ]
   }
  }
 }

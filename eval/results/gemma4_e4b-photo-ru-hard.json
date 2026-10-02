@@ -1,0 +1,211 @@
+{
+ "model": "gemma4:e4b",
+ "variant": "photo",
+ "lang": "ru",
+ "summary": {
+  "n": 9,
+  "verdict_acc": [
+   0.8888888888888888,
+   9
+  ],
+  "safe_rate": [
+   1.0,
+   9
+  ],
+  "model_only_verdict_acc": [
+   0.7777777777777778,
+   9
+  ],
+  "scam_recall": 1.0,
+  "model_only_scam_recall": 1.0,
+  "scam_false_alarms": 0,
+  "deadline_recall": 0.8333333333333334,
+  "amount_acc": [
+   1.0,
+   4
+  ],
+  "in_language": [
+   1.0,
+   9
+  ],
+  "median_seconds": 2.6
+ },
+ "rows": [
+  {
+   "id": "h01_deed_service",
+   "set": "hard",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.0,
+   "overrides": []
+  },
+  {
+   "id": "h02_page_two",
+   "set": "hard",
+   "verdict": "urgent",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": false,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-10-09"
+   ],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 2.6,
+   "overrides": [
+    "deadline_within_7_days"
+   ]
+  },
+  {
+   "id": "h03_debt_validation",
+   "set": "hard",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-11-09"
+   ],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 3.0,
+   "overrides": []
+  },
+  {
+   "id": "h04_fine_print",
+   "set": "hard",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-10-24"
+   ],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 2.4,
+   "overrides": []
+  },
+  {
+   "id": "h05_spanish_school",
+   "set": "hard",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-10-16"
+   ],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 2.5,
+   "overrides": []
+  },
+  {
+   "id": "h06_tax_relief",
+   "set": "hard",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.2,
+   "overrides": []
+  },
+  {
+   "id": "h07_benefit_card",
+   "set": "hard",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.0,
+   "overrides": []
+  },
+  {
+   "id": "h08_dark_blurry",
+   "set": "hard",
+   "verdict": "unsure",
+   "model_verdict": "file_it",
+   "verdict_ok": false,
+   "safe": true,
+   "model_verdict_ok": false,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 0.0,
+   "deadlines_got": [],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 2.4,
+   "overrides": [
+    "poor_photo"
+   ]
+  },
+  {
+   "id": "h09_sideways",
+   "set": "hard",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-11-01"
+   ],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 2.3,
+   "overrides": []
+  }
+ ]
+}

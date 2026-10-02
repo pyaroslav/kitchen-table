@@ -61,5 +61,7 @@
  "error_model": "The helper program on the computer isn't running. Ask {helper} to start it.",
  "error_read": "I couldn't read that photo. Try again with more light.",
  "family": "your family",
- "seconds": "{n} seconds"
+ "seconds": "{n} seconds",
+ "v_unsure": "I'm not sure. The photo is too dark or blurry. Please take another one in good light.",
+ "retake": "Take another photo"
 }

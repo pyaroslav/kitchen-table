@@ -37,12 +37,16 @@ def score(truth: dict, out: dict, lang: str) -> dict:
     want = set(truth["deadlines"])
     amount_ok = None
     if truth.get("amount") is not None:
-        amount_ok = a["money"].get("amount") is not None and abs(a["money"]["amount"] - truth["amount"]) < 0.01
+        amount_ok = (a["money"].get("amount") is not None and abs(a["money"]["amount"] - truth["amount"]) < 0.01
+                     and a["money"].get("direction") == truth["direction"])
     scam_pred = a["verdict"] == "scam_warning"
     return {
         "verdict": a["verdict"],
         "model_verdict": a["model_verdict"],
         "verdict_ok": a["verdict"] in truth["verdict"],
+        # "unsure" (asks for a new photo) is a miss, but a safe one; "file_it" on a real bill is not.
+        "safe": a["verdict"] in truth["verdict"] or a["verdict"] == "unsure"
+                or (a["verdict"] in ("urgent", "scam_warning") and "file_it" not in truth["verdict"]),
         "model_verdict_ok": a["model_verdict"] in truth["verdict"],
         "scam_truth": truth["scam"],
         "scam_pred": scam_pred,
@@ -72,6 +76,7 @@ def summarise(rows: list[dict]) -> dict:
     return {
         "n": len(rows),
         "verdict_acc": rate("verdict_ok"),
+        "safe_rate": rate("safe"),
         "model_only_verdict_acc": rate("model_verdict_ok"),
         "scam_recall": tp / (tp + fn) if tp + fn else None,
         "model_only_scam_recall": mtp / (mtp + mfn) if mtp + mfn else None,
@@ -89,21 +94,26 @@ def main():
     ap.add_argument("--lang", default="ru")
     ap.add_argument("--variant", choices=["photo", "png"], default="photo")
     ap.add_argument("--only", nargs="*")
+    ap.add_argument("--set", choices=["core", "hard", "holdout", "all"], default="all")
     args = ap.parse_args()
 
     truth = json.loads((LETTERS / "truth.json").read_text())
     today = date.fromisoformat(truth["today"])
     RESULTS.mkdir(exist_ok=True)
-    ext = "photo.jpg" if args.variant == "photo" else "png"
 
     for model in args.models:
         rows = []
         for lid, t in truth["letters"].items():
             if args.only and lid not in args.only:
                 continue
-            img = (LETTERS / f"{lid}.{ext}").read_bytes()
-            out = reader.read_letter([img], args.lang, "en", model=model, today=today)
-            s = {"id": lid, **score(t, out, args.lang)}
+            if args.set != "all" and t["set"] != args.set:
+                continue
+            if args.variant == "photo":
+                imgs = [(LETTERS / p).read_bytes() for p in t["photos"]]
+            else:
+                imgs = [(LETTERS / p.replace(".photo.jpg", ".png")).read_bytes() for p in t["photos"]]
+            out = reader.read_letter(imgs, args.lang, "en", model=model, today=today)
+            s = {"id": lid, "set": t["set"], **score(t, out, args.lang)}
             rows.append(s)
             print(f"{model:12} {lid:20} {s['verdict']:14} ok={s['verdict_ok']!s:5} "
                   f"dl={s['deadline_recall']} amt={s['amount_ok']} lang={s['in_language']} {s['seconds']:.1f}s"
@@ -111,7 +121,7 @@ def main():
             (RESULTS / f"{model.replace(':', '_')}-{args.variant}-{args.lang}.raw.json").open("a").write(
                 json.dumps({"id": lid, "out": out}, ensure_ascii=False) + "\n")
         summary = summarise(rows)
-        (RESULTS / f"{model.replace(':', '_')}-{args.variant}-{args.lang}.json").write_text(
+        (RESULTS / f"{model.replace(':', '_')}-{args.variant}-{args.lang}-{args.set}.json").write_text(
             json.dumps({"model": model, "variant": args.variant, "lang": args.lang, "summary": summary, "rows": rows},
                        ensure_ascii=False, indent=1))
         print(json.dumps({"model": model, **summary}, indent=1, default=str))

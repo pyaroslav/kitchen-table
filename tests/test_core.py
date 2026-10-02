@@ -120,3 +120,22 @@ def test_builtin_ui_strings(client):
 def test_rejects_too_many_pages(client):
     files = [("pages", (f"{i}.jpg", _jpeg(), "image/jpeg")) for i in range(7)]
     assert client.post("/api/letters", files=files).status_code == 400
+
+
+def test_file_it_with_near_deadline_becomes_urgent():
+    a = reader.postprocess(_analysis(verdict="file_it", deadlines=[{"date": "2026-10-06", "what": "visit"}]), [], TODAY)
+    assert a["verdict"] == "urgent"
+
+
+def test_scam_has_no_calendar_deadlines():
+    a = reader.postprocess(_analysis(), redflags.scan("Deposit cash at a Bitcoin ATM"), TODAY)
+    assert a["verdict"] == "scam_warning" and a["deadlines"] == [] and a["steps"][0]["by_date"] is None
+
+
+@pytest.mark.parametrize("text,strong", [
+    ("Property Record Retrieval Department is a private company and is not affiliated with any county or government agency.", True),
+    ("National Tax Resolution Center is a private tax resolution firm and is not a government agency.", True),
+    ("Vehicle Protection Services Center is not affiliated with your vehicle manufacturer or dealer.", False),
+])
+def test_lookalike_official(text, strong):
+    assert redflags.has_strong(redflags.scan(text)) is strong

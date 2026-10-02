@@ -1,0 +1,346 @@
+{
+ "model": "gemma4:e2b",
+ "variant": "photo",
+ "lang": "ru",
+ "summary": {
+  "n": 15,
+  "verdict_acc": [
+   0.8666666666666667,
+   15
+  ],
+  "safe_rate": [
+   0.8666666666666667,
+   15
+  ],
+  "model_only_verdict_acc": [
+   0.8,
+   15
+  ],
+  "scam_recall": 1.0,
+  "model_only_scam_recall": 1.0,
+  "scam_false_alarms": 0,
+  "deadline_recall": 0.9166666666666666,
+  "amount_acc": [
+   1.0,
+   6
+  ],
+  "in_language": [
+   0.06666666666666667,
+   15
+  ],
+  "median_seconds": 2.0
+ },
+ "rows": [
+  {
+   "id": "01_water_bill",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-10-20"
+   ],
+   "amount_ok": true,
+   "in_language": false,
+   "seconds": 4.1,
+   "overrides": []
+  },
+  {
+   "id": "02_shutoff",
+   "set": "core",
+   "verdict": "urgent",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": false,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-10-08"
+   ],
+   "amount_ok": true,
+   "in_language": false,
+   "seconds": 2.2,
+   "overrides": [
+    "deadline_within_7_days"
+   ]
+  },
+  {
+   "id": "03_eob",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "file_it",
+   "verdict_ok": false,
+   "safe": false,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2027-03-28"
+   ],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 2.0,
+   "overrides": [
+    "has_steps_and_deadline"
+   ]
+  },
+  {
+   "id": "04_clinic_bill",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-11-01"
+   ],
+   "amount_ok": true,
+   "in_language": false,
+   "seconds": 1.7999999999999998,
+   "overrides": []
+  },
+  {
+   "id": "05_jury",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 0.5,
+   "deadlines_got": [
+    "2026-10-12"
+   ],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 1.9,
+   "overrides": []
+  },
+  {
+   "id": "06_ssn_scam",
+   "set": "core",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 2.5,
+   "overrides": []
+  },
+  {
+   "id": "07_prize_scam",
+   "set": "core",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 2.1,
+   "overrides": []
+  },
+  {
+   "id": "08_warranty_ad",
+   "set": "core",
+   "verdict": "urgent",
+   "model_verdict": "file_it",
+   "verdict_ok": false,
+   "safe": false,
+   "model_verdict_ok": true,
+   "scam_truth": null,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2026-10-10"
+   ],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 2.0,
+   "overrides": [
+    "has_steps_and_deadline",
+    "deadline_within_7_days"
+   ]
+  },
+  {
+   "id": "09_rx_ready",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": false,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2026-10-13"
+   ],
+   "amount_ok": true,
+   "in_language": false,
+   "seconds": 1.7999999999999998,
+   "overrides": [
+    "has_steps_and_deadline"
+   ]
+  },
+  {
+   "id": "10_property_tax",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-11-15"
+   ],
+   "amount_ok": true,
+   "in_language": false,
+   "seconds": 1.9,
+   "overrides": []
+  },
+  {
+   "id": "11_plan_change",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2026-12-07"
+   ],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 2.0,
+   "overrides": [
+    "has_steps_and_deadline"
+   ]
+  },
+  {
+   "id": "12_refund",
+   "set": "core",
+   "verdict": "file_it",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2026-10-03"
+   ],
+   "amount_ok": true,
+   "in_language": false,
+   "seconds": 1.5,
+   "overrides": []
+  },
+  {
+   "id": "13_appointment",
+   "set": "core",
+   "verdict": "urgent",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": false,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2026-10-06"
+   ],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 2.0,
+   "overrides": [
+    "has_steps_and_deadline",
+    "deadline_within_7_days"
+   ]
+  },
+  {
+   "id": "14_bank_lock_scam",
+   "set": "core",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 2.8,
+   "overrides": []
+  },
+  {
+   "id": "15_cd_maturity",
+   "set": "core",
+   "verdict": "action_needed",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2026-10-18",
+    "2026-10-28"
+   ],
+   "amount_ok": null,
+   "in_language": false,
+   "seconds": 2.2,
+   "overrides": [
+    "has_steps_and_deadline"
+   ]
+  }
+ ]
+}

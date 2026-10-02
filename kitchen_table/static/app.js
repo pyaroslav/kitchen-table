@@ -3,7 +3,7 @@
 
 const $ = (s, el = document) => el.querySelector(s);
 const view = $("#view");
-const ICONS = { file_it: "✓", action_needed: "✎", urgent: "!", scam_warning: "⚠" };
+const ICONS = { file_it: "✓", action_needed: "✎", urgent: "!", scam_warning: "⚠", unsure: "?" };
 
 const store = {
   get(k, d) { try { return localStorage.getItem("kt." + k) ?? d; } catch { return d; } },
@@ -52,6 +52,8 @@ async function loadLanguage(code) {
   document.documentElement.dir = rtl ? "rtl" : "ltr";
   applyStrings(document);
   $("#appName").textContent = t("app_name");
+  $("#settingsBtn").setAttribute("aria-label", t("settings"));
+  $("#backBtn").setAttribute("aria-label", t("back"));
   document.title = t("app_name");
 }
 
@@ -237,7 +239,14 @@ async function renderLetter(id) {
   $("#sender").textContent = a.sender || "?";
   $("#headline").textContent = a.headline;
   $("#summary").textContent = a.summary;
-  if (a.confidence === "low") { $("#lowConf").hidden = false; $("#lowConf").textContent = t("low_confidence"); }
+  if (a.confidence === "low" && a.verdict !== "unsure") { $("#lowConf").hidden = false; $("#lowConf").textContent = t("low_confidence"); }
+  if (a.verdict === "unsure") {
+    const retake = document.createElement("button");
+    retake.className = "big primary";
+    retake.textContent = "📷 " + t("retake");
+    retake.onclick = () => { location.hash = "#/"; setTimeout(() => $("#photoInput").click(), 50); };
+    v.after(retake);
+  }
 
   const steps = $("#steps");
   if (!a.steps?.length) steps.outerHTML = `<p>${t("nothing_to_do")}</p>`;
