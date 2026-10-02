@@ -17,7 +17,7 @@ from PIL import Image, ImageEnhance, ImageFilter, ImageOps, ImageStat
 
 from . import config, redflags
 from .languages import name as lang_name
-from .ollama_client import OllamaError, chat
+from .ollama_client import OllamaError, capabilities, chat
 
 VERDICTS = ["file_it", "action_needed", "urgent", "scam_warning"]
 
@@ -261,6 +261,15 @@ LETTER TRANSCRIPT:
 >>>"""
 
 
+def hear(audio_wav: bytes, lang: str) -> str:
+    """Speech -> text with an audio-capable Gemma (used when the main model can't hear)."""
+    res = chat([{"role": "user", "media": [audio_wav],
+                 "content": f"Transcribe this {lang_name(lang)} speech exactly as spoken. "
+                            "Output only the words. Do not answer the question."}],
+               model=config.EAR_MODEL, temperature=0.0)
+    return res.text.strip()
+
+
 def ask(letter: dict, lang: str, question: str | None = None, audio_wav: bytes | None = None,
         history: list[dict] | None = None, model: str | None = None) -> dict:
     a = letter["analysis"]
@@ -271,6 +280,10 @@ def ask(letter: dict, lang: str, question: str | None = None, audio_wav: bytes |
     for turn in history or []:
         msgs.append({"role": "user", "content": turn["question"]})
         msgs.append({"role": "assistant", "content": turn["answer"]})
+    model = model or config.MODEL
+    if audio_wav and "audio" not in capabilities(model):
+        question = hear(audio_wav, lang)
+        audio_wav = None
     if audio_wav:
         msgs.append({"role": "user", "content": "(The question is in this voice recording.)", "media": [audio_wav]})
     else:

@@ -10,6 +10,10 @@ if not OLLAMA_URL.startswith("http"):
 # gemma4:e4b runs on an ordinary laptop; gemma4:26b is better if you have the GPU.
 MODEL = os.environ.get("KT_MODEL", "gemma4:e4b")
 
+# Gemma 4's big models see but don't hear; the small "edge" models do both. When MODEL
+# can't take audio, spoken questions are transcribed by EAR_MODEL first.
+EAR_MODEL = os.environ.get("KT_EAR_MODEL", "gemma4:e4b")
+
 DATA_DIR = Path(os.environ.get("KT_DATA", Path.cwd() / "data"))
 DB_PATH = DATA_DIR / "kitchen_table.sqlite3"
 

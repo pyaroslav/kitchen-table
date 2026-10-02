@@ -5,6 +5,7 @@ covers photos of letters and spoken questions.
 """
 
 import base64
+import functools
 import json
 import time
 from dataclasses import dataclass
@@ -78,6 +79,13 @@ def chat(
     )
 
 
+@functools.lru_cache(maxsize=8)
+def capabilities(model: str) -> frozenset:
+    r = httpx.post(f"{config.OLLAMA_URL}/api/show", json={"model": model}, timeout=10)
+    r.raise_for_status()
+    return frozenset(r.json().get("capabilities", []))
+
+
 def model_status(model: str | None = None) -> dict:
     """Is Ollama up, is the model pulled, and can it see and hear?"""
     model = model or config.MODEL
@@ -88,10 +96,16 @@ def model_status(model: str | None = None) -> dict:
     if r.status_code != 200:
         return {"ok": False, "model": model, "problem": "model_missing"}
     caps = r.json().get("capabilities", [])
+    ear = model if "audio" in caps else config.EAR_MODEL
+    try:
+        hears = "audio" in capabilities(ear)
+    except httpx.HTTPError:
+        hears = False
     return {
         "ok": "vision" in caps,
         "model": model,
         "vision": "vision" in caps,
-        "audio": "audio" in caps,
+        "audio": hears,
+        "ear_model": ear if hears else None,
         "problem": None if "vision" in caps else "model_cannot_see",
     }

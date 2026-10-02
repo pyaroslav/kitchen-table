@@ -279,7 +279,10 @@ async function renderLetter(id) {
   }
 
   const m = a.money || {};
-  if (m.amount != null && m.direction !== "none" && !scam) {
+  // "Put it away" + "you owe $35" contradicts itself (an EOB's "you may owe"); only show money coming in.
+  const showMoney = m.amount != null && m.direction !== "none" && !scam &&
+                    !(a.verdict === "file_it" && m.direction === "you_owe");
+  if (showMoney) {
     $("#moneyCard").hidden = false;
     $("#money").innerHTML = `<small></small><span></span><small class="ap"></small>`;
     $("#money small").textContent = t(m.direction);
@@ -373,6 +376,7 @@ async function renderLetter(id) {
   };
 
   const mic = $("#micBtn");
+  if (state.status && !state.status.audio) mic.hidden = true;
   let rec = null;
   mic.onclick = async () => {
     if (!canRecordInPage()) { $("#audioInput").click(); return; }

@@ -139,3 +139,20 @@ def test_scam_has_no_calendar_deadlines():
 ])
 def test_lookalike_official(text, strong):
     assert redflags.has_strong(redflags.scan(text)) is strong
+
+
+def test_voice_goes_through_ear_model_when_main_model_cannot_hear(monkeypatch):
+    calls = []
+
+    def fake_chat(messages, **kw):
+        calls.append((kw.get("model"), bool(messages[-1].get("media"))))
+        if kw.get("schema") is reader.ASK_SCHEMA:
+            return ChatResult(json.dumps({"heard": "x", "answer": "Нет."}), 0.1, 1, 1)
+        return ChatResult("Мне нужно платить?", 0.1, 1, 1)
+
+    monkeypatch.setattr(reader, "chat", fake_chat)
+    monkeypatch.setattr(reader, "capabilities", lambda m: frozenset({"vision"}))
+    letter = {"transcript": "t", "analysis": {"headline": "h", "verdict": "file_it"}}
+    out = reader.ask(letter, "ru", audio_wav=b"RIFF", model="gemma4:26b")
+    assert calls == [(config.EAR_MODEL, True), ("gemma4:26b", False)]
+    assert out["heard"] == "Мне нужно платить?"
