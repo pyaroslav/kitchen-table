@@ -5,7 +5,7 @@ import socket
 
 import uvicorn
 
-from . import config
+from . import config, pairing
 
 
 def lan_ip() -> str:
@@ -23,12 +23,22 @@ def main():
     ap = argparse.ArgumentParser(description="Kitchen Table: a private letter explainer.")
     ap.add_argument("--port", type=int, default=8484)
     ap.add_argument("--local-only", action="store_true", help="only this computer, not the phone")
+    ap.add_argument("--new-key", action="store_true", help="unpair every phone and make a new pairing code")
     args = ap.parse_args()
     host = "127.0.0.1" if args.local_only else "0.0.0.0"
     print(f"\n  Kitchen Table is using {config.MODEL} via {config.OLLAMA_URL}")
     print(f"  On this computer:  http://localhost:{args.port}")
     if not args.local_only:
-        print(f"  On the phone (same Wi-Fi):  http://{lan_ip()}:{args.port}\n")
+        url = f"http://{lan_ip()}:{args.port}/?key={pairing.get_key(rotate=args.new_key)}"
+        print("\n  Pair the phone: scan this with its camera (same Wi-Fi), once.\n")
+        try:
+            import qrcode
+            qr = qrcode.QRCode(border=1)
+            qr.add_data(url)
+            qr.print_ascii(invert=True)
+        except ImportError:
+            pass
+        print(f"\n  or open: {url}\n  (keep this private: it lets a device read the letters)\n")
     uvicorn.run("kitchen_table.app:app", host=host, port=args.port, log_level="warning")
 
 

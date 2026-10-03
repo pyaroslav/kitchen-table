@@ -83,8 +83,11 @@ def client(tmp_path, monkeypatch):
         return ChatResult("WATER BILL Amount due $10.00", 0.1, 1, 1)
 
     monkeypatch.setattr(reader, "chat", fake_chat)
+    from kitchen_table import pairing
     from kitchen_table.app import app
-    return TestClient(app)
+    c = TestClient(app)
+    c.cookies.set(pairing.COOKIE, pairing.get_key())
+    return c
 
 
 def _jpeg():
@@ -156,3 +159,30 @@ def test_voice_goes_through_ear_model_when_main_model_cannot_hear(monkeypatch):
     out = reader.ask(letter, "ru", audio_wav=b"RIFF", model="gemma4:26b")
     assert calls == [(config.EAR_MODEL, True), ("gemma4:26b", False)]
     assert out["heard"] == "Мне нужно платить?"
+
+
+def test_unpaired_device_cannot_read_letters(client):
+    from kitchen_table.app import app
+    stranger = TestClient(app)  # same Wi-Fi, never scanned the code
+    assert stranger.get("/api/letters").status_code == 401
+    assert stranger.get("/api/status").status_code == 401
+    assert stranger.get("/api/ui/ru").status_code == 200       # UI text isn't private
+    assert stranger.get("/api/languages").status_code == 200
+    assert stranger.get("/?key=wrong", follow_redirects=False).status_code == 403
+
+
+def test_pairing_link_sets_cookie_and_strips_key(client):
+    from kitchen_table import pairing
+    from kitchen_table.app import app
+    phone = TestClient(app)
+    r = phone.get(f"/?key={pairing.get_key()}", follow_redirects=False)
+    assert r.status_code == 303 and r.headers["location"] == "/"
+    assert "httponly" in r.headers["set-cookie"].lower()
+    assert phone.get("/api/letters").status_code == 200
+
+
+def test_new_key_unpairs_old_phones(client):
+    from kitchen_table import pairing
+    old = pairing.get_key()
+    assert pairing.get_key(rotate=True) != old
+    assert client.get("/api/letters").status_code == 401

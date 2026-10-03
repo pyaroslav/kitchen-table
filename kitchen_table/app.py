@@ -4,12 +4,12 @@ from a phone on the same Wi-Fi."""
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.responses import FileResponse, JSONResponse, Response
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from . import config, reader, store, ui_strings
+from . import config, pairing, reader, store, ui_strings
 from .languages import LANGUAGES
 from .ollama_client import OllamaError, model_status
 
@@ -20,6 +20,25 @@ MAX_UPLOAD = 25 * 1024 * 1024
 app = FastAPI(title="Kitchen Table", docs_url=None, redoc_url=None)
 
 
+@app.middleware("http")
+async def _require_pairing(request: Request, call_next):
+    path = request.url.path
+    key = request.query_params.get("key")
+    if key is not None:
+        # Pairing link from the QR code: remember the device, then drop the key from the URL.
+        if not pairing.is_paired(None, key):
+            return JSONResponse(status_code=403, content={"error": "bad_pairing_key"})
+        resp = RedirectResponse("/", status_code=303)
+        resp.set_cookie(pairing.COOKIE, key, max_age=10 * 365 * 86400, httponly=True, samesite="strict")
+        return resp
+    # The page and the UI strings are not private; letters and the model are.
+    open_paths = path.startswith("/api/ui/") or path == "/api/languages" or not path.startswith("/api/")
+    if not open_paths and not pairing.is_paired(request.client.host if request.client else None,
+                                                  request.cookies.get(pairing.COOKIE)):
+        return JSONResponse(status_code=401, content={"error": "not_paired"})
+    return await call_next(request)
+
+
 @app.exception_handler(OllamaError)
 async def _ollama_down(_, exc: OllamaError):
     return JSONResponse(status_code=503, content={"error": "model_unavailable", "detail": str(exc)})
@@ -28,6 +47,11 @@ async def _ollama_down(_, exc: OllamaError):
 @app.get("/api/status")
 def status():
     return {**model_status(), "languages": LANGUAGES}
+
+
+@app.get("/api/languages")
+def languages():
+    return LANGUAGES
 
 
 @app.get("/api/ui/{lang}")

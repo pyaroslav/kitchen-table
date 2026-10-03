@@ -448,11 +448,19 @@ $("#settingsBtn").onclick = () => { location.hash = "#/setup"; };
 window.addEventListener("hashchange", route);
 
 (async () => {
+  let paired = true;
   try {
-    state.status = await (await fetch("/api/status")).json();
-    state.languages = state.status.languages;
+    const r = await fetch("/api/status");
+    paired = r.status !== 401;
+    state.status = paired ? await r.json() : null;
+    state.languages = state.status?.languages || (await (await fetch("/api/languages")).json());
   } catch { state.languages = { en: { name: "English", native: "English", speech: "en-US" } }; }
   await loadLanguage(settings().lang || "en");
+  if (!paired) {
+    view.innerHTML = `<section class="card"><p class="summary"></p></section>`;
+    $(".summary", view).textContent = t("not_paired");
+    return;
+  }
   if (state.status && !state.status.ok) toast(t("error_model"), 8000);
   route();
 })();

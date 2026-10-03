@@ -63,5 +63,6 @@
  "family": "your family",
  "seconds": "{n} seconds",
  "v_unsure": "I'm not sure. The photo is too dark or blurry. Please take another one in good light.",
- "retake": "Take another photo"
+ "retake": "Take another photo",
+ "not_paired": "This phone isn't connected yet. Ask {helper} to show you the code on the computer, and scan it with the camera."
 }

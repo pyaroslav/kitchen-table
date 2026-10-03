@@ -63,5 +63,6 @@
  "family": "tu familia",
  "seconds": "{n} segundos",
  "v_unsure": "No estoy seguro. La foto está muy oscura o borrosa. Toma otra con buena luz.",
- "retake": "Tomar otra foto"
+ "retake": "Tomar otra foto",
+ "not_paired": "Este teléfono todavía no está conectado. Pídele a {helper} que te muestre el código en la computadora y escanéalo con la cámara."
 }

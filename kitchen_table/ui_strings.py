@@ -26,7 +26,8 @@ def strings(lang: str) -> dict:
         return json.loads(builtin.read_text(encoding="utf8"))
     cache = config.DATA_DIR / "i18n" / f"{lang}.json"
     if cache.exists():
-        return json.loads(cache.read_text(encoding="utf8"))
+        # Strings added after the cache was made fall back to English until it's rebuilt.
+        return {**_en(), **json.loads(cache.read_text(encoding="utf8"))}
 
     en = _en()
     schema = {"type": "object", "properties": {k: {"type": "string"} for k in en}, "required": list(en)}
