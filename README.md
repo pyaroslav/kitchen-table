@@ -19,7 +19,7 @@ Kitchen Table is a small app for a parent who gets mail they can't fully read: u
 
 ## Why local
 
-The mail an older person gets is a map of their life: medications, bank balances, Medicare numbers, debts, court dates. Kitchen Table sends none of it to anyone, and only phones paired by QR code can reach it. The photo is processed on a computer in the same house, EXIF/GPS metadata is stripped, the photo itself is discarded after reading, and only the text is kept in a local SQLite file. Unplug the router and it still works; there are no API keys, no accounts, and no per-letter cost.
+The mail an older person gets is a map of their life: medications, bank balances, Medicare numbers, debts, court dates. Kitchen Table sends none of it to anyone, and only phones paired by QR code can reach it. The photo is processed on a computer in the same house, EXIF/GPS metadata is stripped, the photo itself is discarded after reading, and only the text is kept in a local SQLite file. Cut the internet connection and it still works (it only needs the home Wi-Fi); there are no API keys, no accounts, and no per-letter cost.
 
 ## How it works
 
