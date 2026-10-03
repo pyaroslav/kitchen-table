@@ -1,0 +1,23 @@
+{
+ "note": "Ground truth for real published letters. 'today' is set to ~3 days after each notice date, as if it had just arrived.",
+ "letters": {
+  "r01_irs_cp14": {"url": "https://www.irs.gov/pub/notices/cp14_english.pdf", "source": "https://www.irs.gov/individuals/understanding-your-cp14-notice", "license": "US federal work, public domain",
+    "pages": [1], "today": "2018-02-02", "verdict": ["action_needed", "urgent"], "deadlines": ["2018-02-20"], "amount": 1075.21, "direction": "you_owe", "scam": false},
+  "r02_irs_cp501": {"url": "https://www.irs.gov/pub/notices/cp501_english.pdf", "source": "https://www.irs.gov/individuals/understanding-your-cp501-notice", "license": "US federal work, public domain",
+    "pages": [1], "today": "2019-01-31", "verdict": ["action_needed", "urgent"], "deadlines": ["2019-02-19"], "amount": 9533.53, "direction": "you_owe", "scam": false},
+  "r03_irs_cp504_levy": {"url": "https://www.irs.gov/pub/notices/cp504_english.pdf", "source": "https://www.irs.gov/individuals/understanding-your-cp504-notice", "license": "US federal work, public domain",
+    "pages": [1, 2], "today": "2019-02-02", "verdict": ["urgent"], "deadlines": [], "amount": 9533.53, "direction": "you_owe", "scam": false},
+  "r04_jury_summons": {"url": "https://www.idd.uscourts.gov/Content_Fetcher/index.cfml/Example_District_of_Idaho_Jury_Summons_3239.pdf?Content_ID=3239", "source": "https://www.id.uscourts.gov/", "license": "US federal court work, public domain",
+    "pages": [1], "today": "2024-05-10", "verdict": ["action_needed", "urgent"], "deadlines": [], "amount": null, "direction": null, "scam": false},
+  "r05_utility_shutoff": {"url": "https://www.puc.pa.gov/transport/gassafe/pdf/SGTF_Termination_Notice.pdf", "source": "https://www.puc.pa.gov/", "license": "Pennsylvania PUC model notice; not clearly public domain (not redistributed)",
+    "pages": [4], "today": "2009-06-01", "verdict": ["urgent", "action_needed"], "deadlines": [], "amount": null, "direction": null, "scam": false},
+  "r06_scam_ssa_oig": {"url": "https://oig.ssa.gov/~assets/uploads/ig-letterhead-image.png", "source": "https://oig.ssa.gov/scam-alerts/2025-11-12-unexpected-letter-text-or-email-from-the-social-security-administration-office-of-inspector-general-think-scam-first/", "license": "published by SSA OIG; carries a FRAUD watermark",
+    "pages": [1], "today": "2025-11-07", "verdict": ["scam_warning"], "deadlines": [], "amount": null, "direction": null, "scam": true},
+  "r07_scam_ssa_suspension": {"url": "https://oig.ssa.gov/~assets/uploads/scam-alert-press-release-march-2023.pdf", "source": "https://oig.ssa.gov/", "license": "published by SSA OIG; carries a FAKE DOCUMENT watermark",
+    "pages": [1], "extract_image": true, "today": "2023-03-10", "verdict": ["scam_warning"], "deadlines": [], "amount": null, "direction": null, "scam": true},
+  "r08_scam_deed_warranty": {"url": "https://adamscounty.iowa.gov/images/news/scam_letter_from_county_deed_records_57625.jpg", "source": "https://adamscounty.iowa.gov/news/scam_letter_from_county_deed_records/", "license": "county news photo of a private mailer; not clearly public domain (not redistributed)",
+    "pages": [1], "already_a_photo": true, "today": "2023-04-27", "verdict": ["scam_warning", "file_it"], "deadlines": [], "amount": null, "direction": null, "scam": true},
+  "r09_scam_deed_copy": {"url": "https://www.nashville.gov/sites/default/files/2023-02/Scam%20Alert%201_1.JPG", "source": "https://www.nashville.gov/departments/register-deeds/news/property-owners-be-alert-deed-letter-scam", "license": "Metro Nashville posting of a private mailer; not clearly public domain (not redistributed)",
+    "pages": [1], "today": "2023-03-01", "verdict": ["scam_warning", "file_it"], "deadlines": [], "amount": null, "direction": null, "scam": true}
+ }
+}

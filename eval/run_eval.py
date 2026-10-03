@@ -94,11 +94,20 @@ def main():
     ap.add_argument("--lang", default="ru")
     ap.add_argument("--variant", choices=["photo", "png"], default="photo")
     ap.add_argument("--only", nargs="*")
-    ap.add_argument("--set", choices=["core", "hard", "holdout", "all"], default="all")
+    ap.add_argument("--set", choices=["core", "hard", "holdout", "all", "real"], default="all")
     args = ap.parse_args()
 
-    truth = json.loads((LETTERS / "truth.json").read_text())
-    today = date.fromisoformat(truth["today"])
+    if args.set == "real":  # real published letters, fetched by eval/realset/fetch.py
+        letters_dir = HERE / "realset" / "cache"
+        truth = json.loads((HERE / "realset" / "truth.json").read_text())
+        for lid, t in truth["letters"].items():
+            t["set"] = "real"
+            t["photos"] = sorted(p.name for p in letters_dir.glob(f"{lid}.p*.photo.jpg"))
+        today = None
+    else:
+        letters_dir = LETTERS
+        truth = json.loads((LETTERS / "truth.json").read_text())
+        today = date.fromisoformat(truth["today"])
     RESULTS.mkdir(exist_ok=True)
 
     for model in args.models:
@@ -109,10 +118,11 @@ def main():
             if args.set != "all" and t["set"] != args.set:
                 continue
             if args.variant == "photo":
-                imgs = [(LETTERS / p).read_bytes() for p in t["photos"]]
+                imgs = [(letters_dir / p).read_bytes() for p in t["photos"]]
             else:
-                imgs = [(LETTERS / p.replace(".photo.jpg", ".png")).read_bytes() for p in t["photos"]]
-            out = reader.read_letter(imgs, args.lang, "en", model=model, today=today)
+                imgs = [(letters_dir / p.replace(".photo.jpg", ".png")).read_bytes() for p in t["photos"]]
+            day = date.fromisoformat(t["today"]) if "today" in t else today
+            out = reader.read_letter(imgs, args.lang, "en", model=model, today=day)
             s = {"id": lid, "set": t["set"], **score(t, out, args.lang)}
             rows.append(s)
             print(f"{model:12} {lid:20} {s['verdict']:14} ok={s['verdict_ok']!s:5} "

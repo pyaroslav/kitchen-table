@@ -1,0 +1,209 @@
+{
+ "model": "gemma4:e4b",
+ "variant": "photo",
+ "lang": "ru",
+ "summary": {
+  "n": 9,
+  "verdict_acc": [
+   0.8888888888888888,
+   9
+  ],
+  "safe_rate": [
+   0.8888888888888888,
+   9
+  ],
+  "model_only_verdict_acc": [
+   0.8888888888888888,
+   9
+  ],
+  "scam_recall": 0.5,
+  "model_only_scam_recall": 0.5,
+  "scam_false_alarms": 0,
+  "deadline_recall": 1.0,
+  "amount_acc": [
+   1.0,
+   3
+  ],
+  "in_language": [
+   1.0,
+   9
+  ],
+  "median_seconds": 3.9
+ },
+ "rows": [
+  {
+   "id": "r01_irs_cp14",
+   "set": "real",
+   "verdict": "urgent",
+   "model_verdict": "urgent",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2018-02-20"
+   ],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 4.2,
+   "overrides": []
+  },
+  {
+   "id": "r02_irs_cp501",
+   "set": "real",
+   "verdict": "urgent",
+   "model_verdict": "urgent",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": 1.0,
+   "deadlines_got": [
+    "2019-02-19"
+   ],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 3.5999999999999996,
+   "overrides": []
+  },
+  {
+   "id": "r03_irs_cp504_levy",
+   "set": "real",
+   "verdict": "urgent",
+   "model_verdict": "urgent",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2019-03-02"
+   ],
+   "amount_ok": true,
+   "in_language": true,
+   "seconds": 5.0,
+   "overrides": []
+  },
+  {
+   "id": "r04_jury_summons",
+   "set": "real",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2024-05-30"
+   ],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 4.6,
+   "overrides": []
+  },
+  {
+   "id": "r05_utility_shutoff",
+   "set": "real",
+   "verdict": "urgent",
+   "model_verdict": "urgent",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": false,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2009-06-01"
+   ],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.7,
+   "overrides": []
+  },
+  {
+   "id": "r06_scam_ssa_oig",
+   "set": "real",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 4.300000000000001,
+   "overrides": []
+  },
+  {
+   "id": "r07_scam_ssa_suspension",
+   "set": "real",
+   "verdict": "scam_warning",
+   "model_verdict": "scam_warning",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": true,
+   "model_scam_pred": true,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.3000000000000003,
+   "overrides": []
+  },
+  {
+   "id": "r08_scam_deed_warranty",
+   "set": "real",
+   "verdict": "action_needed",
+   "model_verdict": "action_needed",
+   "verdict_ok": false,
+   "safe": false,
+   "model_verdict_ok": false,
+   "scam_truth": true,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [
+    "2023-05-25"
+   ],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.9,
+   "overrides": []
+  },
+  {
+   "id": "r09_scam_deed_copy",
+   "set": "real",
+   "verdict": "file_it",
+   "model_verdict": "file_it",
+   "verdict_ok": true,
+   "safe": true,
+   "model_verdict_ok": true,
+   "scam_truth": true,
+   "scam_pred": false,
+   "model_scam_pred": false,
+   "deadline_recall": null,
+   "deadlines_got": [],
+   "amount_ok": null,
+   "in_language": true,
+   "seconds": 3.7,
+   "overrides": []
+  }
+ ]
+}

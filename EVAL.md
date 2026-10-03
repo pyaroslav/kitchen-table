@@ -12,6 +12,10 @@
 | hard | 9 | a $89 "certified deed copy" mailer, a deadline that only appears on **page 2**, a legitimate debt-collection validation notice, a coverage-ending deadline hidden in **fine print** under a friendly newsletter, a **Spanish** school letter, a private "tax resolution" firm dressed as a levy notice, a benefits-card phishing letter, a **dark and blurry** photo, a photo taken **sideways** | Russian |
 | holdout | 6 | written **after** all prompt and rule changes, run once, not tuned on: a homestead-exemption filing service, an HOA violation notice, a Cash App "rebate" scam, a state revenue adjustment (refund), lab results needing a re-test "within 5 days", a library book-sale flyer | Ukrainian |
 
+### Real-world set (9 real published letters)
+
+After the synthetic work was finished, I ran 9 **real** documents once, without changing any prompt or rule afterwards: three IRS notices (CP14 balance due, CP501 reminder, and CP504 intent-to-levy, two pages), a federal jury summons (District of Idaho), Pennsylvania's model 10-day gas shut-off notice, two fake "Social Security" letters published by the SSA Inspector General, and two deceptive "County Deed Records" / "Clerks Property Office" mailers that counties warned residents about. They aren't redistributed here: `eval/realset/fetch.py` downloads each one from its official source and makes the same kind of phone photo; ground truth and sources are in `eval/realset/truth.json`. These documents are years old, so each one is evaluated with "today" set to about three days after its notice date.
+
 ## Scoring
 
 - **Verdict**: the final verdict is in the set of acceptable verdicts for that letter (e.g. a jury summons may be *urgent* or *action needed*; a refund may be *file it* or *action needed*).
@@ -32,9 +36,11 @@
 | gemma4:e4b | core (15, ru) | 100% | 100% | 87% | 100% | 100% | 0 | 100% | 100% | 100% | 2.5s |
 | gemma4:e4b | hard (9, ru) | 89% | 100% | 78% | 100% | 100% | 0 | 83% | 100% | 100% | 2.6s |
 | gemma4:e4b | holdout (6, uk) | 100% | 100% | 100% | 100% | 100% | 0 | 100% | 100% | 100% | 2.9s |
+| gemma4:e4b | real (9, ru) | 89% | 89% | 89% | 50% | 50% | 0 | 100% | 100% | 100% | 3.9s |
 | gemma4:26b | core (15, ru) | 100% | 100% | 100% | 100% | 100% | 0 | 100% | 100% | 100% | 3.5s |
 | gemma4:26b | hard (9, ru) | 100% | 100% | 89% | 100% | 100% | 0 | 100% | 100% | 100% | 3.6s |
 | gemma4:26b | holdout (6, uk) | 100% | 100% | 100% | 100% | 100% | 0 | 100% | 100% | 100% | 3.5s |
+| gemma4:26b | real (9, ru) | 100% | 100% | 100% | 100% | 100% | 0 | 100% | 100% | 100% | 5.3s |
 
 Timing is end to end (read + explain) on an RTX 5090. With the GPU disabled, `gemma4:e4b` took ~39 s per letter on a 16-core Ryzen 9 9950X; expect a minute or more on a laptop.
 
@@ -47,11 +53,15 @@ Timing is end to end (read + explain) on an RTX 5090. With the GPU disabled, `ge
 5. **e2b doesn't follow the language instruction.** 3% of its answers were in Russian/Ukrainian; it explains in English. That alone rules it out for this user.
 6. **26b can't hear.** Gemma 4's 26B model accepts images but not audio; the edge models (e2b/e4b) take both. Kitchen Table transcribes spoken questions with e4b and answers with whichever model reads the letters.
 
+7. **Real letters: 26b 9/9, e4b 8/9 (one unsafe miss).** e4b transcribed the "County Deed Records" home-warranty mailer word for word, then called it *action needed* (pay a $199 "renewal fee"). None of the rules fire on it: no gift card, no government disclaimer, and its urgency wording ("FINAL RENEWAL NOTICE", "IMMEDIATE RESPONSE REQUESTED") isn't in the patterns. 26b called it a scam on its own. I left it unfixed on purpose: a rule written after seeing this letter would turn the only untuned real-world number into a tuned one. e4b also put the $89 deed-copy mailer in *nothing to do*, which is safe but not a scam warning. **This is the strongest argument for running 26b when you have the GPU.**
+8. **Real IRS notices read cleanly.** All three IRS notices came back with the exact amount ($1,075.21 and $9,533.53, twice) and, where printed, the exact pay-by date. Both models called the levy notice *urgent*.
+
 ## Caveats
 
-- 30 letters, one run each, synthetic and typeset. Real mail has logos, colour, creases, handwriting and window envelopes; none of that is tested.
+- 30 synthetic letters plus 9 real ones, one run each. The synthetic letters are typeset; the real ones have real layouts, logos and fine print, but they are clean PDFs or published photos, "photographed" in software. Creases, handwriting and window envelopes are untested.
 - The ground-truth "acceptable verdict" sets are my judgement.
-- The holdout set is small (6). It is the only number here that wasn't seen while tuning.
+- The holdout (6) and real (9) sets are small. They are the only numbers here that weren't seen while tuning.
+- The two real SSA scam images carry "FRAUD" / "FAKE DOCUMENT" watermarks added by the SSA OIG, which may make them easier than the real thing. The two deed mailers have no watermark.
 - Language check is script-based (Cyrillic share), not a fluency judgement.
 
 Raw per-letter outputs are written to `eval/results/*.raw.json` (git-ignored); summaries to `eval/results/*.json`.

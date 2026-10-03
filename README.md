@@ -53,7 +53,9 @@ The model reads and explains. **Code owns everything a parent should never have 
 | gemma4:e4b | 29/30 | 30/30 | 8/8 | 92% | 100% | ~2.7 s (~39 s on CPU only) |
 | gemma4:e2b | 25/30 | 25/30 | 6/8 | 88% | 3% | ~2 s |
 
-**Use `gemma4:e4b` or bigger.** `e2b` answers in English no matter what language you ask for.
+**Real letters, run once and not tuned:** 9 published documents (three IRS notices including an intent-to-levy, a federal jury summons, a utility shut-off notice, and four real scam or deceptive mailers that agencies and counties warned about). `gemma4:26b` got all 9 right. `gemma4:e4b` got 8: it read a "County Deed Records" home-warranty mailer perfectly and still called it *action needed*. The files aren't redistributed; `eval/realset/fetch.py` downloads them from the official sources.
+
+**Use `gemma4:e4b` or bigger, and `gemma4:26b` if you have the GPU.** `e2b` answers in English no matter what language you ask for.
 
 ## Run it
 
@@ -93,4 +95,4 @@ It's not legal, medical or financial advice, and it says so in the only way a pa
 
 ## License
 
-MIT. Every organisation, person, address and phone number in `eval/letters/` is invented; phone numbers use the reserved 555-01xx range.
+MIT. Every organisation, person, address and phone number in `eval/letters/` is invented; phone numbers use the reserved 555-01xx range. The real-world set in `eval/realset/` is fetched from its publishers and not included.

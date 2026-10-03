@@ -5,7 +5,7 @@ from pathlib import Path
 
 RES = Path(__file__).parent / "results"
 ORDER = ["gemma4:e2b", "gemma4:e4b", "gemma4:26b"]
-SETS = ["core", "hard", "holdout"]
+SETS = ["core", "hard", "holdout", "real"]
 
 
 def pct(v):
