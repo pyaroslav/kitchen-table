@@ -1,5 +1,7 @@
 # Kitchen Table
 
+[![tests](https://github.com/pyaroslav/kitchen-table/actions/workflows/tests.yml/badge.svg)](https://github.com/pyaroslav/kitchen-table/actions/workflows/tests.yml)
+
 **Snap a photo of a confusing letter. Get a plain answer in your own language. The letter never leaves the house.**
 
 Kitchen Table is a small app for a parent who gets mail they can't fully read: utility bills, insurance statements, jury summonses, "FINAL NOTICE" envelopes, and the scams that are designed to look exactly like them. They take a photo on their phone; a computer at home runs **Gemma 4** locally through **Ollama** and answers:
@@ -17,7 +19,7 @@ Kitchen Table is a small app for a parent who gets mail they can't fully read: u
 
 ## Why local
 
-The mail an older person gets is a map of their life: medications, bank balances, Medicare numbers, debts, court dates. Kitchen Table sends none of it to anyone. The photo is processed on a computer in the same house, EXIF/GPS metadata is stripped, the photo itself is discarded after reading, and only the text is kept in a local SQLite file. Unplug the router and it still works; there are no API keys, no accounts, and no per-letter cost.
+The mail an older person gets is a map of their life: medications, bank balances, Medicare numbers, debts, court dates. Kitchen Table sends none of it to anyone, and only phones paired by QR code can reach it. The photo is processed on a computer in the same house, EXIF/GPS metadata is stripped, the photo itself is discarded after reading, and only the text is kept in a local SQLite file. Unplug the router and it still works; there are no API keys, no accounts, and no per-letter cost.
 
 ## How it works
 
@@ -58,15 +60,14 @@ The model reads and explains. **Code owns everything a parent should never have 
 You need [Ollama](https://ollama.com) (0.35 or newer for Gemma 4) and Python 3.11+.
 
 ```bash
-ollama pull gemma4:e4b          # 6.6 GB; also does voice
-ollama pull gemma4:26b          # optional: better reading, needs a ~24 GB GPU
 git clone https://github.com/pyaroslav/kitchen-table && cd kitchen-table
-uv venv && uv pip install -e .  # or: python -m venv .venv && .venv/bin/pip install -e .
-.venv/bin/python -m kitchen_table              # uses gemma4:e4b
-KT_MODEL=gemma4:26b .venv/bin/python -m kitchen_table
+./start.sh                       # pulls gemma4:e4b (6.6 GB) the first time; also does voice
+KT_MODEL=gemma4:26b ./start.sh   # better reading, needs a ~24 GB GPU
 ```
 
-It prints two addresses. Open the second one on the parent's phone (same Wi-Fi), pick their language, type your name as the helper, and use *Add to Home Screen*.
+It prints a **QR code**. Scan it with the parent's phone camera (same Wi-Fi) once: that pairs the phone and opens the app. Pick their language, type your name as the helper, and use *Add to Home Screen*.
+
+**Only paired devices can read letters.** The server is on the home Wi-Fi, so without pairing anyone on that network (guests, a smart TV) could open the API. The QR code carries a secret key; the phone keeps it as an HttpOnly cookie. The computer itself never needs pairing. `./start.sh --new-key` unpairs every phone.
 
 | Setting | Default | |
 |---|---|---|
@@ -80,7 +81,7 @@ It prints two addresses. Open the second one on the parent's phone (same Wi-Fi),
 ## Tests and evaluation
 
 ```bash
-.venv/bin/pip install -e '.[dev]' && .venv/bin/python -m pytest      # 24 model-free tests
+.venv/bin/pip install -e '.[dev]' && .venv/bin/python -m pytest      # 27 model-free tests
 .venv/bin/python eval/make_letters.py                                # re-render the letter set (needs Chrome)
 .venv/bin/python eval/run_eval.py --models gemma4:e4b --lang ru --set all
 .venv/bin/python eval/report.py
