@@ -15,7 +15,7 @@ Kitchen Table is a small app for a parent who gets mail they can't fully read: u
 
 ![Kitchen Table: a letter photo, the explanation in Russian, and a spoken follow-up question](docs/hero.png)
 
-**40-second walkthrough** (captions in English): [GIF](docs/kitchen-table-demo.gif) · [MP4](docs/kitchen-table-demo.mp4)
+**Walkthrough:** [narrated video, 86 s](docs/kitchen-table-demo-narrated.mp4) · [silent GIF, 40 s](docs/kitchen-table-demo.gif). The narration is Piper, an open-source text-to-speech engine, running locally.
 
 ## Why local
 
